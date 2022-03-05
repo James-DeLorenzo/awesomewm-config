@@ -111,13 +111,14 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
--- {{{{ cutom widgets
--- create a logout menu
+-- {{{ cutom widgets
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local battery_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
--- }}}}
+local wifi_widget = require("custom-widgets.wifi-widget.wifi")
+local test_widget = wibox.widget.textbox("test")
+-- }}}
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -207,6 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
+    -- s.mywibox = awful.wibar({ position = "top", screen = s , height = 50})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -221,14 +223,20 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+            wifi_widget{
+                size = 50
+            },
+            -- test_widget,
             volume_widget{
                 widget_type = 'arc',
                 mute_color = '#FF000011',
-                size = 22
+                size = 40,
+                thickness = 3
             },
             battery_widget{
                 show_current_level = true,
-                size = 22
+                size = 40,
+                arc_thickness = 3
             },
             mytextclock,
             s.mylayoutbox,
@@ -352,9 +360,15 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
     -- Brightness
     awful.key({ mod2 }, "XF86MonBrightnessUp", function () os.execute("light -A 10") end,
-              {description = "+10%", group = "hotkeys"}),
+              {description = "+10% backlight", group = "hotkeys"}),
     awful.key({ mod2 }, "XF86MonBrightnessDown", function () os.execute("light -U 10") end,
-              {description = "-10%", group = "hotkeys"})
+              {description = "-10% backlight", group = "hotkeys"}),
+    awful.key({ mod2 }, "XF86AudioRaiseVolume", function () os.execute("amixer set Master 5%+") end,
+              {description = "+5% audio", group = "hotkeys"}),
+    awful.key({ mod2 }, "XF86AudioLowerVolume", function () os.execute("amixer set Master 5%-") end,
+              {description = "-5% audio", group = "hotkeys"}),
+    awful.key({ mod2 }, "XF86AudioMute", function () os.execute("amixer set Master toggle") end,
+              {description = "mute audio", group = "hotkeys"})
 )
 
 clientkeys = gears.table.join(
