@@ -598,3 +598,6 @@ autorun = true
 if autorun then
     awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 end
+
+
+-- vim: foldmethod=marker
