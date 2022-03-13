@@ -9,6 +9,6 @@ function run {
 }
 
 run picom -b
-run xrandr | grep ' connected' | awk '{ for (counter = 0; counter < NR; counter++) system("nitrogen --random --set-zoom-fill --head=" counter); }'
+run xrandr | grep ' connected' | wc -l | awk '{ for (counter = 0; counter < $1; counter++) system("nitrogen --random --set-zoom-fill --head=" counter) }'
 run light-locker
 run 1password --silent
