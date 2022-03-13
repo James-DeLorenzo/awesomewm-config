@@ -385,10 +385,21 @@ globalkeys = gears.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"}),
     -- Brightness
-    awful.key({ mod2 }, "XF86MonBrightnessUp", function () os.execute("light -A 10") end,
-              {description = "+10%", group = "hotkeys"}),
-    awful.key({ mod2 }, "XF86MonBrightnessDown", function () os.execute("light -U 10") end,
-              {description = "-10%", group = "hotkeys"})
+    -- awful.key({ mod2 }, "XF86MonBrightnessUp", function () os.execute("light -A 10") end,
+    --           {description = "+10%", group = "hotkeys"}),
+    -- awful.key({ mod2 }, "XF86MonBrightnessDown", function () os.execute("light -U 10") end,
+    --           {description = "-10%", group = "hotkeys"})
+    -- Multimedia
+    awful.key({ }, "XF86AudioPlay", function () os.execute("playerctl play-pause") end,
+              {description = "Play/Pause", group = "hotkeys"}),
+    awful.key({ }, "XF86AudioNext", function () os.execute("playerctl next") end,
+              {description = "Play Next", group = "hotkeys"}),
+    awful.key({ }, "XF86AudioPrevious", function () os.execute("playerctl previous") end,
+              {description = "Play Previous", group = "hotkeys"}),
+    awful.key({ mod2 }, "XF86AudioRaiseVolume", function () os.execute("amixer -D pulse sset Master 10%+") end,
+              {description = "+ 10%", group = "hotkeys"}),
+    awful.key({ mod2 }, "XF86AudioLowerVolume", function () os.execute("amixer -D pulse sset Master 10%-") end,
+              {description = "- 10%", group = "hotkeys"})
 )
 
 clientkeys = gears.table.join(
