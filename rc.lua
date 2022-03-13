@@ -48,7 +48,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st"
+terminal = "kitty"
 editor_cmd = "nvim"
 browser = "firefox"
 
@@ -105,7 +105,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
@@ -116,7 +116,6 @@ mytextclock = wibox.widget.textclock()
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
-local battery_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
 -- }}}}
 
 -- Create a wibox for each screen and add it
@@ -202,7 +201,46 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytasklist = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+        -- layout  = {
+        --     spacing_widget = {
+        --         {
+        --             widget = wibox.widget.separator
+        --         },
+        --         widget = wibox.container.place
+        --     },
+        --     -- forced_width = 10,
+        --     layout = wibox.layout.fixed.horizontal
+        --     -- layout = wibox.layout.flex.horizontal
+        -- },
+        -- style = {
+        --     shape = gears.shape.rectangle
+        -- },
+        -- widget_template = {
+        --     {
+        --         {
+        --             {
+        --                 {
+        --                     id     = "icon_role",
+        --                     widget = wibox.widget.imagebox,
+        --                 },
+        --                 margins = 2,
+        --                 widget  = wibox.container.margin,
+        --             },
+        --             {
+        --                 id     = "text_role",
+        --                 forced_width = 200,
+        --                 widget = wibox.widget.textbox,
+        --             },
+        --             layout = wibox.layout.fixed.horizontal,
+        --         },
+        --         left  = 10,
+        --         right = 10,
+        --         widget = wibox.container.margin
+        --     },
+        --     id     = "background_role",
+        --     widget = wibox.container.background,
+       -- }
     }
 
     -- Create the wibox
@@ -224,10 +262,6 @@ awful.screen.connect_for_each_screen(function(s)
             volume_widget{
                 widget_type = 'arc',
                 mute_color = '#FF000011',
-                size = 22
-            },
-            battery_widget{
-                show_current_level = true,
                 size = 22
             },
             mytextclock,
