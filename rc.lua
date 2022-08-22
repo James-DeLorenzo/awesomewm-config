@@ -18,6 +18,9 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- remove tmux from shortcut list
+-- awful.hotkeys_popup.keys.tmux = {}
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -111,9 +114,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
+<<<<<<< Updated upstream
 -- {{{{ cutom widgets
 -- create a logout menu
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+=======
+-- {{{ cutom widgets
+local logout_menu_widget = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
+>>>>>>> Stashed changes
 local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 -- }}}}
@@ -266,7 +274,8 @@ awful.screen.connect_for_each_screen(function(s)
             },
             mytextclock,
             s.mylayoutbox,
-            logout_menu_widget{
+            logout_menu_widget.widget{
+                phrases = {},
                 onlock = function() awful.spawn.with_shell("light-locker-command -l") end
             },
         },
@@ -333,6 +342,8 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control"     }, "b", function () awful.spawn(browser) end,
               {description = "open a browser", group = "launcher"}),
+    awful.key({ modkey,           }, "l", function () logout_menu_widget.launch() end,
+              {description = "open lock popup", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
