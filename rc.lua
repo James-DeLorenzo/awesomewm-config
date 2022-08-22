@@ -18,6 +18,9 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+-- remove tmux from shortcut list
+-- awful.hotkeys_popup.keys.tmux = {}
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -48,7 +51,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st"
+terminal = "kitty"
 editor_cmd = "nvim"
 browser = "firefox"
 
@@ -112,7 +115,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 mytextclock = wibox.widget.textclock()
 
 -- {{{ cutom widgets
-local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local logout_menu_widget = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
 local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 local battery_widget = require("awesome-wm-widgets.batteryarc-widget.batteryarc")
@@ -240,7 +243,8 @@ awful.screen.connect_for_each_screen(function(s)
             },
             mytextclock,
             s.mylayoutbox,
-            logout_menu_widget{
+            logout_menu_widget.widget{
+                phrases = {},
                 onlock = function() awful.spawn.with_shell("light-locker-command -l") end
             },
         },
@@ -307,6 +311,8 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control"     }, "b", function () awful.spawn(browser) end,
               {description = "open a browser", group = "launcher"}),
+    awful.key({ modkey,           }, "l", function () logout_menu_widget.launch() end,
+              {description = "open lock popup", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
