@@ -114,14 +114,8 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
 
-<<<<<<< Updated upstream
--- {{{{ cutom widgets
--- create a logout menu
-local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
-=======
 -- {{{ cutom widgets
 local logout_menu_widget = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
->>>>>>> Stashed changes
 local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
 local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 -- }}}}
@@ -537,7 +531,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                     placement = awful.placement.no_overlap+awful.placement.no_offscreen+awful.placement.centered
      }
     },
 
